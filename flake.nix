@@ -38,11 +38,11 @@
       # Given a pkg set, build static-ls
       mkPackage =
         pkgs:
-        pkgs.haskell.lib.dontCheck (
+        pkgs.haskell.lib.doJailbreak (pkgs.haskell.lib.dontCheck (
           pkgs.haskellPackages.callCabal2nix packageName self rec {
             # Dependency overrides go here
           }
-        );
+        ));
 
     in
     flake-utils.lib.eachDefaultSystem (

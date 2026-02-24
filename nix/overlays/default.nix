@@ -50,8 +50,8 @@ in
         hiedb = self.haskell.lib.dontCheck (haskellSuper.callHackage "hiedb" "0.6.0.1" {});
         text-rope = haskellSuper.callHackage "text-rope" "0.3" {};
 
-        lsp-types = haskellSuper.callHackage "lsp-types" "2.3.0.0" {};
-        lsp = haskellSuper.callHackage "lsp" "2.7.0.0" {};
+        lsp-types = self.haskell.lib.doJailbreak (haskellSuper.callHackage "lsp-types" "2.3.0.0" {});
+        lsp = self.haskell.lib.doJailbreak (haskellSuper.callHackage "lsp" "2.7.0.0" {});
       };
     };
   }
