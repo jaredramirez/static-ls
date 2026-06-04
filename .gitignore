@@ -37,3 +37,4 @@ errors.txt
 result/
 ghc-out.json
 .ghcid_session
+.claude/scheduled_tasks.lock

@@ -47,11 +47,25 @@ in
           rev = "ec14d702660c79a907e9c45812958cd0df0f036f";
         }) {};
 
-        hiedb = self.haskell.lib.dontCheck (haskellSuper.callHackage "hiedb" "0.6.0.1" {});
-        text-rope = haskellSuper.callHackage "text-rope" "0.3" {};
+      }
+      # GHC 9.12+: nixpkgs already ships compatible versions (hiedb 0.7, lsp 2.7.0.1,
+      # lsp-types 2.3.0.1, text-rope 0.3), so we use those defaults rather than the
+      # older Hackage pins below, which do not build against GHC 9.12.
+      // (if super.lib.hasPrefix "ghc912" self.ghcVersion
+          then {
+            hiedb = self.haskell.lib.dontCheck haskellSuper.hiedb;
+            lsp = self.haskell.lib.doJailbreak haskellSuper.lsp;
+            lsp-types = self.haskell.lib.doJailbreak haskellSuper.lsp-types;
+            # optics 0.4.2.1's test suite fails to build on GHC 9.12 (3
+            # AffineTraversal property tests); the library itself is fine.
+            optics = self.haskell.lib.dontCheck haskellSuper.optics;
+          }
+          else {
+            hiedb = self.haskell.lib.dontCheck (haskellSuper.callHackage "hiedb" "0.6.0.1" {});
+            text-rope = haskellSuper.callHackage "text-rope" "0.3" {};
 
-        lsp-types = self.haskell.lib.doJailbreak (haskellSuper.callHackage "lsp-types" "2.3.0.0" {});
-        lsp = self.haskell.lib.doJailbreak (haskellSuper.callHackage "lsp" "2.7.0.0" {});
-      };
+            lsp-types = self.haskell.lib.doJailbreak (haskellSuper.callHackage "lsp-types" "2.3.0.0" {});
+            lsp = self.haskell.lib.doJailbreak (haskellSuper.callHackage "lsp" "2.7.0.0" {});
+          });
     };
   }

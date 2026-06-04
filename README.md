@@ -25,7 +25,7 @@ If you want to use `static-ls` in your IDE then
 recommended alongside `-fdefer-type-errors flag` for better UX
 and the [ghc hiedb plugin](https://github.com/josephsumabat/hiedb-plugin) for re-indexing. 
 
-Currently only ghc 9.4.4 and 9.6.1 are explicitly supported but I'm happy to add support for other versions of ghc if desired.
+GHC versions 9.4 through 9.12 are explicitly supported (tested in CI against 9.4, 9.6, 9.10, and 9.12). I'm happy to add support for other versions of ghc if desired.
 
 To install, it is recommended to build from source. It's important to build
 `static-ls` with the same version of GHC that your project uses.
